@@ -21,17 +21,22 @@
     @include('layouts.sidebar')
 
     <div class="ml-0 sm:ml-64 bg-gray-100 dark:bg-gray-900">
+
         <!-- Page Heading -->
         @isset($header)
             <header class="bg-white dark:bg-gray-800 shadow">
                 {{ $header }}
             </header>
         @endisset
+        <x-gradient-div>
+            <x-container-div>
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </x-container-div>
+        </x-gradient-div>
     </div>
 
 </div>

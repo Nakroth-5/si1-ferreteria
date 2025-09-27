@@ -23,7 +23,7 @@
     <x-table-header>
         <x-input-label>
             <x-icons.roles></x-icons.roles>
-            {{ __('Rol Principal Asignado') }}
+            {{ __('Roles') }}
         </x-input-label>
     </x-table-header>
     <x-table-header>
@@ -33,4 +33,3 @@
         </x-input-label>
     </x-table-header>
 </div>
-

@@ -15,9 +15,8 @@ class UserManager extends Component
     use WithPagination;
 
     public $search = '';
-    public $show_modal = false;
-    public $show_delete_modal = false;
-    public $editing_user = null;
+    public $show = false;
+    public $editing = null;
 
     public $name = '';
     public $last_name = '';
@@ -32,7 +31,6 @@ class UserManager extends Component
     public $roles = [];
 
     protected $pagination_theme = 'tailwind';
-    public $user_to_delete = null;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -60,12 +58,12 @@ class UserManager extends Component
         if (!empty($this->search)) {
             $searchTerm = '%' . $this->search . '%';
             $query->where(function ($q) use ($searchTerm) {
-                $q->where('name', 'like', $searchTerm)
-                    ->orWhere('last_name', 'like', $searchTerm)
-                    ->orWhere('email', 'like', $searchTerm)
-                    ->orWhere('phone', 'like', $searchTerm)
-                    ->orWhere('document_number', 'like', $searchTerm)
-                    ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", [$searchTerm]);
+                $q->where('name', 'ILIKE', $searchTerm)
+                    ->orWhere('last_name', 'ILIKE', $searchTerm)
+                    ->orWhere('email', 'ILIKE', $searchTerm)
+                    ->orWhere('phone', 'ILIKE', $searchTerm)
+                    ->orWhere('document_number', 'ILIKE', $searchTerm)
+                    ->orWhereRaw("CONCAT(name, ' ', last_name) ILIKE ?", [$searchTerm]);
             });
         }
 
@@ -91,7 +89,7 @@ class UserManager extends Component
             return;
         }
 
-        $this->editing_user = $user->id;
+        $this->editing = $user->id;
         $this->name = $user->name;
         $this->last_name = $user->last_name;
         $this->phone = $user->phone ?? '';
@@ -104,15 +102,15 @@ class UserManager extends Component
         $this->roles = $user->roles ? $user->roles->pluck('id')->toArray() : [];
         $this->password = '';
 
-        $this->show_modal = true;
+        $this->show = true;
     }
 
     public function saveUser(): void
     {
         $rules = $this->rules;
 
-        if ($this->editing_user) {
-            $rules['email'] = 'required|email|max:255|unique:users,email,' . $this->editing_user;
+        if ($this->editing) {
+            $rules['email'] = 'required|email|max:255|unique:users,email,' . $this->editing;
             $rules['password'] = 'nullable|string|min:8';
         } else {
             $rules['email'] = 'required|email|max:255|unique:users,email';
@@ -122,8 +120,8 @@ class UserManager extends Component
         $this->validate($rules);
 
         try {
-            if ($this->editing_user) {
-                $user = User::find($this->editing_user);
+            if ($this->editing) {
+                $user = User::find($this->editing);
                 if (!$user) {
                     session()->flash('error', 'Usuario no encontrado');
                     $this->closeModal();
@@ -203,13 +201,13 @@ class UserManager extends Component
     public function openCreateModal(): void
     {
         $this->resetForm();
-        $this->editing_user = null;
-        $this->show_modal = true;
+        $this->editing = null;
+        $this->show = true;
     }
 
     public function closeModal(): void
     {
-        $this->show_modal = false;
+        $this->show = false;
         $this->resetForm();
         $this->dispatch('modal-closed');
     }
@@ -227,7 +225,7 @@ class UserManager extends Component
             'document_number',
             'status',
             'password',
-            'editing_user',
+            'editing',
         ]);
 
         $this->resetErrorBag();
@@ -235,11 +233,6 @@ class UserManager extends Component
     }
 
     public function mount(): void
-    {
-        $this->resetForm();
-    }
-
-    public function refreshComponent(): void
     {
         $this->resetForm();
     }

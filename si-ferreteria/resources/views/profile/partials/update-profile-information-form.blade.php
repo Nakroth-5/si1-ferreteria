@@ -19,7 +19,6 @@
                     id="name"
                     name="name"
                     type="text"
-                    class="mt-2 block w-full bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-yellow-500"
                     :value="old('name', $user->name)"
                     placeholder="Nombre"/>
                 <x-input-error class="mt-2" :messages="$errors->get('name')"/>
@@ -31,7 +30,6 @@
                     {{ __('Apellido(s)') }}
                 </x-input-label>
                 <x-text-input id="last_name" name="last_name" type="text"
-                              class="mt-2 block w-full bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-yellow-500"
                               :value="old('last_name', $user->last_name)"
                               required autofocus autocomplete="last_name"/>
                 <x-input-error class="mt-2" :messages="$errors->get('last_name')"/>
@@ -45,11 +43,11 @@
                     <span class="ml-2 text-xs bg-blue-600 text-white px-2 py-1 rounded-full">Solo Lectura</span>
                 </x-input-label>
                 <div class="mt-2 flex items-center">
-                    <input
+                    <x-text-input
                         type="email"
                         value="{{ $user->email }}"
                         readonly
-                        class="block w-full bg-gray-700 border-gray-500 text-gray-300 rounded-md shadow-sm cursor-not-allowed opacity-75"
+                        class="cursor-not-allowed opacity-75"
                     />
                     <div class="ml-2 p-2 bg-blue-600 rounded-lg">
                        <x-icons.look></x-icons.look>
@@ -60,18 +58,18 @@
 
             {{--Roles --}}
             <div class="bg-gray-800/50 border border-gray-600/50 rounded-lg p-4">
-                <x-input-label class="text-gray-200 font-semibold flex items-center">
+                <x-input-label>
                    <x-icons.roles></x-icons.roles>
                     {{ __('Role Principal Asignado') }}
                     <span
                         class="ml-2 text-xs bg-emerald-600 text-white px-2 py-1 rounded-full">{{ $user->getRolPrincipal()->created_by }}</span>
                 </x-input-label>
                 <div class="mt-2 flex items-center">
-                    <input
+                    <x-text-input
                         type="text"
                         value="{{ $user->getRolPrincipal()->name }}"
                         readonly
-                        class="block w-full bg-gray-700 border-gray-500 text-gray-300 rounded-md shadow-sm cursor-not-allowed opacity-75"
+                        class="cursor-not-allowed opacity-75"
                     />
                     <div class="ml-2 p-2 bg-blue-600 rounded-lg">
                         <x-icons.look></x-icons.look>
@@ -86,7 +84,6 @@
                     {{ __('Teléfono') }}
                 </x-input-label>
                 <x-text-input id="phone" name="phone" type="text"
-                              class="mt-2 block w-full bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-yellow-500"
                               :value="old('phone', $user->phone)"
                               required autofocus autocomplete="last_name"/>
                 <x-input-error class="mt-2" :messages="$errors->get('phone')"/>
@@ -97,14 +94,13 @@
                    <x-icons.gender></x-icons.gender>
                     {{ __('Género') }}
                 </x-input-label>
-                <select name="gender" id="gender"
-                        class="mt-2 block w-full bg-gray-800 border-gray-600 text-white focus:border-yellow-500 focus:ring-yellow-500 rounded-md shadow-sm">
+                <x-select-input name="gender" id="gender">
                     <option value="">Seleccionar género</option>
                     <option value="male" {{ old('gender', $user->gender) === 'male' ? 'selected' : '' }}>Masculino
                     </option>
                     <option value="female" {{ old('gender', $user->gender) === 'female' ? 'selected' : '' }}>Femenino
                     </option>
-                </select>
+                </x-select-input>
                 <x-input-error class="mt-2" :messages="$errors->get('gender')"/>
             </div>
 
@@ -113,10 +109,9 @@
                    <x-icons.document_tipe></x-icons.document_tipe>
                     {{ __('Tipo de Documento') }}
                 </x-input-label>
-                <select
+                <x-select-input
                     id="document_type"
-                    name="document_type"
-                    class="mt-2 block w-full bg-gray-800 border-gray-600 text-white focus:border-yellow-500 focus:ring-yellow-500 rounded-md shadow-sm">
+                    name="document_type">
                     <option value="">Seleccionar tipo</option>
                     <option value="CI" {{ old('document_type', $user->document_type) === 'CI' ? 'selected' : '' }}>
                         Cédula de Identidad
@@ -128,8 +123,7 @@
                         value="PASSPORT" {{ old('document_type', $user->document_type) === 'PASSPORT' ? 'selected' : '' }}>
                         Pasaporte
                     </option>
-
-                </select>
+                </x-select-input>
                 <x-input-error class="mt-2" :messages="$errors->get('document_type')"/>
             </div>
 
@@ -142,7 +136,6 @@
                     id="document_number"
                     name="document_number"
                     type="text"
-                    class="mt-2 block w-full bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-yellow-500"
                     :value="old('document_number', $user->document_number)"
                     placeholder="Número de documento"/>
                 <x-input-error class="mt-2" :messages="$errors->get('document_number')"/>
@@ -152,12 +145,11 @@
                     <x-icons.address></x-icons.address>
                     {{ __('Dirección') }}
                 </x-input-label>
-                <textarea
+                <x-textarea-input
                     id="address"
                     name="address"
-                    rows="3"
-                    class="mt-2 block w-full bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm resize-none"
-                    placeholder="Ingresa tu dirección completa">{{ old('address', $user->address) }}</textarea>
+                    rows="4"
+                    placeholder="Ingresa tu dirección completa">{{ old('address', $user->address) }}</x-textarea-input>
                 <x-input-error class="mt-2" :messages="$errors->get('address')"/>
             </div>
         </div>
@@ -171,7 +163,7 @@
             @if (session('success'))
                 <div x-data="{ show: true }"
                      x-show="show"
-                     x-init="setTimeout(() => show = false, 3000)"
+                     x-init="setTimeout(() => show = false, 50000)"
                      class="px-4 py-2 bg-green-500 text-white rounded-md">
                     {{ session('success') }}
                 </div>
