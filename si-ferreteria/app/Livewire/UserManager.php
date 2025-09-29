@@ -67,7 +67,7 @@ class UserManager extends Component
             });
         }
 
-        $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        $users = $query->orderBy('name' )->paginate(10);
         $allRoles = Role::all();
         return view('livewire.user.user-manager', compact('users', 'allRoles'))
             ->layout('layouts.app');

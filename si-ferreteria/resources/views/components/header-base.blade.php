@@ -28,7 +28,7 @@
                 <x-text-input
                     wire:model.live="{{ $modeLive }}"
                     type="text"
-                    placeholder="{{ __('Buscar por nombre, email, teléfono...') }}"
+                    placeholder="{{ __('Buscar por nombre, ...') }}"
                     class="pl-10 pr-10"
                 />
                 @if($search)
@@ -43,16 +43,25 @@
     </x-container-second-div>
 
     <!-- Botón Crear << ?? >> -->
-    <x-container-second-div>
-        <div class="flex justify-end">
-            <x-primary-button
-                wire:click="{{ $clickOpenCreateModal }}"
-                class="flex items-center bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800">
-                <x-icons.user class="mr-2"></x-icons.user>
-                {{ $btnName }}
-            </x-primary-button>
-        </div>
-    </x-container-second-div>
+    @if($btnName)
+        <x-container-second-div>
+            <div class="flex justify-end">
+                <x-primary-button
+                    wire:click="{{ $clickOpenCreateModal }}"
+                    class="flex items-center bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800">
+                    <x-icons.user class="mr-2"></x-icons.user>
+                    {{ $btnName }}
+                </x-primary-button>
+            </div>
+        </x-container-second-div>
+
+    @else
+        <x-container-second-div>
+            <div class="flex justify-end">
+                <x-primary-button class="items-center"/>
+            </div>
+        </x-container-second-div>
+    @endif
 </div>
 
 {{-- Contador de resultados --}}

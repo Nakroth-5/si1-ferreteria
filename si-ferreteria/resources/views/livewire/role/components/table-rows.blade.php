@@ -1,9 +1,9 @@
 <div>
     <td class="px-6 py-2 whitespace-nowrap">
         <div class="flex items-center ml-4">
-            <div class="text-sm font-medium text-white">
-                {{ $item->name  }}
-            </div>
+            <x-input-label>
+                {{ $item->name }}
+            </x-input-label>
         </div>
     </td>
     <td>

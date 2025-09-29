@@ -1,0 +1,9 @@
+<div>
+    <x-table.data-table
+        :items="$auditLogs"
+        header="livewire.audit.components.header-audit"
+        table-header="livewire.audit.components.table-header"
+        table-rows="livewire.audit.components.table-rows"
+        :search="$search"
+    />
+</div>

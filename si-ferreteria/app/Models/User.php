@@ -85,4 +85,9 @@ class User extends Authenticatable
     {
         return $this->roles()->orderBy('level', 'desc')->first();
     }
+
+    public function audit_log(): HasOne
+    {
+        return $this->hasOne(AuditLog::class);
+    }
 }

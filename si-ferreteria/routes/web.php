@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\AuditLog;
 use App\Livewire\RoleManager;
 use App\Livewire\UserManager;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('Administrador')->group(function () {
         Route::get('/users', UserManager::class)->name('users.index');
         Route::get('/roles', RoleManager::class)->name('roles.index');
+        Route::get('audit-logs', AuditLog::class)->name('audit-logs.index');
     });
 
 });

@@ -6,7 +6,6 @@ use App\Models\Permission;
 use App\Models\Role;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Hash;
 
 class RoleManager extends Component
 {
@@ -79,7 +78,6 @@ class RoleManager extends Component
         $this->show = true;
     }
 
-    // Método corregido para guardar roles
     public function saveRole(): void
     {
         $rules = $this->rules;
@@ -106,16 +104,11 @@ class RoleManager extends Component
 
                 $role->update($updateData);
 
-                // Sincronizar permisos
-                if (!empty($this->permissions)) {
-                    $sync_data = collect($this->permissions)->mapWithKeys(function ($permission_id) {
-                        return [$permission_id => ['assigned_date' => now()]];
-                    });
-                    $role->permissions()->sync($sync_data);
-                } else {
-                    $role->permissions()->detach();
-                }
+                $sync_data = collect($this->permissions)->mapWithKeys(function ($permission_id) {
+                    return [$permission_id => ['assigned_date' => now()]];
+                })->toArray();
 
+                $role->permissions()->sync($sync_data);
                 session()->flash('message', 'Rol actualizado correctamente');
             } else {
                 $role = Role::create([
@@ -128,21 +121,19 @@ class RoleManager extends Component
                 ]);
 
                 // Sincronizar permisos
-                if (!empty($this->permissions)) {
-                    $sync_data = collect($this->permissions)->mapWithKeys(function ($permission_id) {
-                        return [$permission_id => ['assigned_date' => now()]];
-                    });
-                    $role->permissions()->sync($sync_data);
-                }
-
+                $sync_data = collect($this->permissions)->mapWithKeys(function ($permission_id) {
+                    return [$permission_id => ['assigned_date' => now()]];
+                })->toArray();
+                $role->permissions()->sync($sync_data);
                 session()->flash('message', 'Rol creado correctamente');
             }
-        } catch (\Exception $e) {
+            $this->closeModal();
+
+        } catch
+        (\Exception $e) {
             session()->flash('error', 'Error al procesar el rol: ' . $e->getMessage());
             return;
         }
-
-        $this->closeModal();
     }
 
     public function deleteRole($id): void
@@ -182,13 +173,16 @@ class RoleManager extends Component
             'permissions',
             'editing'
         ]);
+
+        $this->resetErrorBag();
+        $this->resetValidation();
     }
 
     public function openCreateModal(): void
     {
         $this->clearForm();
         $this->editing = null;
-        $this->is_active = true; // Valor por defecto
+        $this->is_active = true;
         $this->show = true;
     }
 
