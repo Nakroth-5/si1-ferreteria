@@ -11,6 +11,7 @@ class AuditLog extends Model
         'user_id',
         'action',
         'affected_model',
+        'changes',
         'affected_model_id',
         'ip_address',
         'user_agent',
@@ -19,6 +20,7 @@ class AuditLog extends Model
     protected $casts = [
         'user_id' => 'integer',
         'affected_model_id' => 'integer',
+        'changes' => 'array',
     ];
 
     public function user(): BelongsTo

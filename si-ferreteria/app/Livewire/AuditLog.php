@@ -14,6 +14,7 @@ class AuditLog extends Component
     public $user = null;
     public $action = '';
     public $affected_model = null;
+    public $changes = '';
     public $affected_model_id = null;
     public $ip_address = '';
     public $user_agent = '';
@@ -31,6 +32,7 @@ class AuditLog extends Component
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('action', 'ILIKE', $searchTerm)
                     ->orWhere('affected_model', 'ILIKE', $searchTerm)
+                    ->orWhere('changes', 'ILIKE', $searchTerm)
                     ->orWhere('ip_address', 'ILIKE', $searchTerm)
                     ->orWhere('user_agent', 'ILIKE', $searchTerm);
             });

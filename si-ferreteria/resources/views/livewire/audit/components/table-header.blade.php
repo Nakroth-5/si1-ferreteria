@@ -22,6 +22,13 @@
 
     <x-table-header>
         <x-input-label>
+            <x-icons.table/>
+            {{ __('Cambios') }}
+        </x-input-label>
+    </x-table-header>
+
+    <x-table-header>
+        <x-input-label>
             <x-icons.ip-address/>
             {{ __('Dirección IP') }}
         </x-input-label>
@@ -31,13 +38,6 @@
         <x-input-label>
             <x-icons.firefox/>
             {{ __('Navegador') }}
-        </x-input-label>
-    </x-table-header>
-
-    <x-table-header>
-        <x-input-label>
-            <x-icons.timedate/>
-            {{ __('Fecha creación') }}
         </x-input-label>
     </x-table-header>
 

@@ -18,6 +18,26 @@
     </td>
 
     <td class="px-6 py-2 whitespace-nowrap">
+        <div class="flex flex-col ml-4 text-sm text-gray-700">
+            @foreach(($item->changes['after'] ?? []) as $field => $newValue)
+                @php
+                    $oldValue = $item->changes['before'][$field] ?? '—';
+                    if ($field === 'updated_at' || $field === 'created_at') {
+                        $newValue = \Carbon\Carbon::parse($newValue)->format('d/m/Y H:i:s');
+                        $oldValue = \Carbon\Carbon::parse($oldValue)->format('d/m/Y H:i:s');
+                    }
+                @endphp
+                <div>
+                    <strong>{{ ucfirst($field) }}</strong>:
+                    {{ $oldValue }} → {{ $newValue }}
+                </div>
+            @endforeach
+        </div>
+    </td>
+
+
+
+    <td class="px-6 py-2 whitespace-nowrap">
         <div class="flex items-center ml-4">
             <x-input-label value="{{ $item->ip_address }}"/>
         </div>
@@ -26,12 +46,6 @@
     <td class="px-6 py-2 whitespace-nowrap">
         <div class="flex items-center ml-4">
             <x-input-label value="{{ $item->user_agent }}"/>
-        </div>
-    </td>
-
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->created_at }}"/>
         </div>
     </td>
 

@@ -187,8 +187,8 @@ class UserManager extends Component
         try {
             $user = User::find($id);
             if ($user) {
-                // $user->delete();
-                $user->update(['status' => false]);
+                $user->delete();
+                //$user->update(['status' => false]);
                 session()->flash('message', 'Usuario eliminado correctamente');
             } else {
                 session()->flash('error', 'Usuario no encontrado');
