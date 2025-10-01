@@ -67,7 +67,7 @@ class UserManager extends Component
             });
         }
 
-        $users = $query->orderBy('name' )->paginate(10);
+        $users = $query->orderBy('name')->paginate(10);
         $allRoles = Role::all();
         return view('livewire.user.user-manager', compact('users', 'allRoles'))
             ->layout('layouts.app');
@@ -79,7 +79,7 @@ class UserManager extends Component
         $this->resetPage();
     }
 
-    public function editUser($id): void
+    public function edit($id): void
     {
         $this->resetForm();
 
@@ -105,7 +105,7 @@ class UserManager extends Component
         $this->show = true;
     }
 
-    public function saveUser(): void
+    public function save(): void
     {
         $rules = $this->rules;
 
@@ -136,7 +136,7 @@ class UserManager extends Component
                     'address' => $this->address,
                     'document_type' => $this->document_type,
                     'document_number' => $this->document_number,
-                    'status' => (bool) $this->status,
+                    'status' => (bool)$this->status,
                     'updated_at' => now(),
                 ];
 
@@ -148,8 +148,7 @@ class UserManager extends Component
 
                 $sync_data = Collect($this->roles)->mapWithKeys(function ($role_id) {
                     return [$role_id => ['assigned_date' => now()]];
-                })->toArray();
-
+                });
                 $user->roles()->sync($sync_data);
                 session()->flash('message', 'Usuario actualizado correctamente');
             } else {
@@ -162,7 +161,7 @@ class UserManager extends Component
                     'email' => $this->email,
                     'document_type' => $this->document_type,
                     'document_number' => $this->document_number,
-                    'status' => (bool) $this->status,
+                    'status' => (bool)$this->status,
                     'password' => Hash::make($this->password),
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -182,7 +181,7 @@ class UserManager extends Component
         }
     }
 
-    public function deleteUser($id): void
+    public function delete($id): void
     {
         try {
             $user = User::find($id);

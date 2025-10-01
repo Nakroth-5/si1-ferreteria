@@ -15,9 +15,9 @@
 
             <div class="flex items-center justify-start rtl:justify-end border-b-2 border-orange-600">
                 <x-primary-button class="inline-flex items-center  py-1 w-30 h-8">
-                    <x-dropdown-link :href="route('profile.edit')">
+                    <a href="{{ route('profile.edit') }}">
                         <x-input-label>{{ Auth::user()->name }}</x-input-label>
-                    </x-dropdown-link>
+                    </a>
                 </x-primary-button>
             </div>
         </div>

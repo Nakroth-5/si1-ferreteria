@@ -1,60 +1,56 @@
 <div>
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->user->name }}"/>
-        </div>
-    </td>
+    <x-table.td data="{{ $item->user->name }}"/>
 
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->action }}"/>
-        </div>
-    </td>
+    <x-table.td data="{{ $item->action }}"/>
 
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->affected_model ?? 'N/A' }}"/>
-        </div>
-    </td>
+    <x-table.td data="{{ $item->affected_model ?? 'N/A' }}"/>
 
+    {{-- Cambios --}}
     <td class="px-6 py-2 whitespace-nowrap">
         <div class="flex flex-col ml-4 text-sm text-gray-700">
-            @foreach(($item->changes['after'] ?? []) as $field => $newValue)
-                @php
-                    $oldValue = $item->changes['before'][$field] ?? '—';
-                    if ($field === 'updated_at' || $field === 'created_at') {
-                        $newValue = \Carbon\Carbon::parse($newValue)->format('d/m/Y H:i:s');
-                        $oldValue = \Carbon\Carbon::parse($oldValue)->format('d/m/Y H:i:s');
-                    }
-                @endphp
-                <div>
-                    <x-input-label>
-                        <strong>{{ ucfirst($field) }}</strong>:
-                        {{ $oldValue }} → {{ $newValue }}
-                    </x-input-label>
+            @php
+                $changes = $item->changes['after'] ?? [];
+            @endphp
 
-                </div>
-            @endforeach
+            @if(empty($changes))
+                <x-input-label value="{{ 'Ningún cambio' }}"/>
+            @else
+                @foreach($changes as $field => $newValue)
+                    @php
+                        $oldValue = $item->changes['before'][$field] ?? '—';
+
+                        // Formatear fechas
+                        if ($field === 'updated_at' || $field === 'created_at') {
+                            $newValue = \Carbon\Carbon::parse($newValue)->format('d/m/Y H:i:s');
+                            $oldValue = $oldValue !== '—'
+                                ? \Carbon\Carbon::parse($oldValue)->format('d/m/Y H:i:s')
+                                : '—';
+                        }
+
+                        if (in_array($field, ['active', 'status', 'is_active', 'enabled'])) {
+                            $newValue = $newValue == 1 ? 'Activo' : 'Inactivo';
+                            $oldValue = $oldValue == 1 ? 'Activo' : ($oldValue === '—' ? '—' : 'Inactivo');
+                        }
+
+                        $fieldName = match($field) {
+                            'is_active' => 'Activo',
+                            'updated_at' => 'Actualizado',
+                            'created_at' => 'Creado',
+                            default => ucfirst(str_replace('_', ' ', $field))
+                        };
+                    @endphp
+                    <div>
+                        <x-input-label>
+                            <strong>{{ $fieldName }}</strong>:
+                            {{ $oldValue }} → {{ $newValue }}
+                        </x-input-label>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </td>
 
+    <x-table.td data="{{ $item->ip_address }}"/>
 
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->ip_address }}"/>
-        </div>
-    </td>
-
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->user_agent }}"/>
-        </div>
-    </td>
-
-    <td class="px-6 py-2 whitespace-nowrap">
-        <div class="flex items-center ml-4">
-            <x-input-label value="{{ $item->updated_at }}"/>
-        </div>
-    </td>
-
+    <x-table.td data="{{ $item->updated_at }}"/>
 </div>

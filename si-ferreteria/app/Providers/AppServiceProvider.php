@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
+use App\Observers\GenericObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        User::observe(UserObserver::class);
+        User::observe(GenericObserver::class);
+        Role::observe(GenericObserver::class);
+        Permission::observe(GenericObserver::class);
     }
 }

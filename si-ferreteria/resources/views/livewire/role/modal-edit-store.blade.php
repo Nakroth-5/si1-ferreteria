@@ -2,9 +2,9 @@
     :show="$show"
     :title="$editing ? 'Editar rol' : 'Crear rol'"
     :editing="$editing"
-    submit-prevent="saveRole"
+    submit-prevent="save"
     click-close="closeModal"
-    click-save="saveRole"
+    click-save="save"
 >
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <x-form.field

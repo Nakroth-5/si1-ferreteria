@@ -2,9 +2,9 @@
     :show="$show"
     :title="$editing ? 'Editar Usuario' : 'Crear Usuario'"
     :editing="$editing"
-    submit-prevent="saveUser"
+    submit-prevent="save"
     click-close="closeModal"
-    click-save="saveUser"
+    click-save="save"
 >
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {{-- Nombre --}}

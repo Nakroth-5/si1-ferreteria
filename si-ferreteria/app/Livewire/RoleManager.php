@@ -58,7 +58,7 @@ class RoleManager extends Component
             ->layout('layouts.app');
     }
 
-    public function editRole($id): void
+    public function edit($id): void
     {
         $this->clearForm();
         $role = Role::find($id);
@@ -78,7 +78,7 @@ class RoleManager extends Component
         $this->show = true;
     }
 
-    public function saveRole(): void
+    public function save(): void
     {
         $rules = $this->rules;
 
@@ -136,12 +136,11 @@ class RoleManager extends Component
         }
     }
 
-    public function deleteRole($id): void
+    public function delete($id): void
     {
         try {
             $role = Role::find($id);
             if ($role) {
-                // Soft delete - cambiar estado a inactivo
                 $role->update(['is_active' => false]);
                 session()->flash('message', 'Rol desactivado correctamente');
             } else {

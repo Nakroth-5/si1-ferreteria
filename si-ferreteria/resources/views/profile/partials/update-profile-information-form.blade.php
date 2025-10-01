@@ -8,7 +8,6 @@
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6 ">
         @csrf
         @method('patch')
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <x-input-label for="name">
@@ -25,8 +24,8 @@
             </div>
 
             <div>
-                <x-input-label for="name" >
-                   <x-icons.user/>
+                <x-input-label for="name">
+                    <x-icons.user/>
                     {{ __('Apellido(s)') }}
                 </x-input-label>
                 <x-text-input id="last_name" name="last_name" type="text"
@@ -38,7 +37,7 @@
             {{--Email--}}
             <div class="bg-gray-800/50 border border-gray-600/50 rounded-lg p-4">
                 <x-input-label for="email">
-                   <x-icons.email></x-icons.email>
+                    <x-icons.email></x-icons.email>
                     {{ __('Correo Electrónico') }}
                     <span class="ml-2 text-xs bg-blue-600 text-white px-2 py-1 rounded-full">Solo Lectura</span>
                 </x-input-label>
@@ -50,7 +49,7 @@
                         class="cursor-not-allowed opacity-75"
                     />
                     <div class="ml-2 p-2 bg-blue-600 rounded-lg">
-                       <x-icons.look></x-icons.look>
+                        <x-icons.look></x-icons.look>
                     </div>
                 </div>
                 <p class="mt-1 text-xs text-blue-300">El correo no puede ser modificado por motivos de seguridad</p>
@@ -59,7 +58,7 @@
             {{--Roles --}}
             <div class="bg-gray-800/50 border border-gray-600/50 rounded-lg p-4">
                 <x-input-label>
-                   <x-icons.roles></x-icons.roles>
+                    <x-icons.roles></x-icons.roles>
                     {{ __('Role Principal Asignado') }}
                     <span
                         class="ml-2 text-xs bg-emerald-600 text-white px-2 py-1 rounded-full">{{ $user->getRolPrincipal()->created_by }}</span>
@@ -80,7 +79,7 @@
 
             <div>
                 <x-input-label for="name" class="text-gray-200 font-semibold flex items-center">
-                   <x-icons.phone></x-icons.phone>
+                    <x-icons.phone></x-icons.phone>
                     {{ __('Teléfono') }}
                 </x-input-label>
                 <x-text-input id="phone" name="phone" type="text"
@@ -91,7 +90,7 @@
 
             <div>
                 <x-input-label for="gender" class="text-gray-200 font-semibold flex items-center">
-                   <x-icons.gender></x-icons.gender>
+                    <x-icons.gender></x-icons.gender>
                     {{ __('Género') }}
                 </x-input-label>
                 <x-select-input name="gender" id="gender">
@@ -105,7 +104,7 @@
 
             <div>
                 <x-input-label for="document_type" class="text-gray-200 font-semibold flex items-center">
-                   <x-icons.document_tipe></x-icons.document_tipe>
+                    <x-icons.document_tipe></x-icons.document_tipe>
                     {{ __('Tipo de Documento') }}
                 </x-input-label>
                 <x-select-input
@@ -139,18 +138,19 @@
                     placeholder="Número de documento"/>
                 <x-input-error class="mt-2" :messages="$errors->get('document_number')"/>
             </div>
-            <div>
-                <x-input-label for="address" class="text-gray-200 font-semibold flex items-center">
-                    <x-icons.address></x-icons.address>
-                    {{ __('Dirección') }}
-                </x-input-label>
-                <x-textarea-input
-                    id="address"
-                    name="address"
-                    rows="4"
-                    placeholder="Ingresa tu dirección completa">{{ old('address', $user->address) }}</x-textarea-input>
-                <x-input-error class="mt-2" :messages="$errors->get('address')"/>
-            </div>
+        </div>
+
+        <div>
+            <x-input-label for="address" class="text-gray-200 font-semibold flex items-center">
+                <x-icons.address/>
+                {{ __('Dirección') }}
+            </x-input-label>
+            <x-textarea-input
+                id="address"
+                name="address"
+                rows="4"
+                placeholder="Ingresa tu dirección completa">{{ old('address', $user->address) }}</x-textarea-input>
+            <x-input-error class="mt-2" :messages="$errors->get('address')"/>
         </div>
 
         <div class="flex items-center gap-4">
