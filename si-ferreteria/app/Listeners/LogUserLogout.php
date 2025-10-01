@@ -2,19 +2,29 @@
 
 namespace App\Listeners;
 
-use App\Livewire\Actions\Logout;
 use App\Models\AuditLog;
-use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 
-class LogUserLogin
+class LogUserLogout
 {
-    public function handle(Login $event): void
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handle(Logout $event): void
     {
         $user = $event->user;
 
         AuditLog::create([
             'user_id' => $user->id,
-            'action' => "El usuario ha iniciado sesión.",
+            'action' => 'El usuario ha cerrado sesión',
             'affected_model' => null,
             'affected_model_id' => null,
             'ip_address' => request()->ip(),
@@ -22,4 +32,3 @@ class LogUserLogin
         ]);
     }
 }
-

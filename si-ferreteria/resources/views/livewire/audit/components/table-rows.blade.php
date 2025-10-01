@@ -28,13 +28,15 @@
                     }
                 @endphp
                 <div>
-                    <strong>{{ ucfirst($field) }}</strong>:
-                    {{ $oldValue }} → {{ $newValue }}
+                    <x-input-label>
+                        <strong>{{ ucfirst($field) }}</strong>:
+                        {{ $oldValue }} → {{ $newValue }}
+                    </x-input-label>
+
                 </div>
             @endforeach
         </div>
     </td>
-
 
 
     <td class="px-6 py-2 whitespace-nowrap">

@@ -12,7 +12,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <x-input-label for="name">
-                    <x-icons.user></x-icons.user>
+                    <x-icons.user/>
                     {{ __('Nombre') }}
                 </x-input-label>
                 <x-text-input
@@ -26,7 +26,7 @@
 
             <div>
                 <x-input-label for="name" >
-                   <x-icons.user></x-icons.user>
+                   <x-icons.user/>
                     {{ __('Apellido(s)') }}
                 </x-input-label>
                 <x-text-input id="last_name" name="last_name" type="text"
@@ -95,7 +95,6 @@
                     {{ __('Género') }}
                 </x-input-label>
                 <x-select-input name="gender" id="gender">
-                    <option value="">Seleccionar género</option>
                     <option value="male" {{ old('gender', $user->gender) === 'male' ? 'selected' : '' }}>Masculino
                     </option>
                     <option value="female" {{ old('gender', $user->gender) === 'female' ? 'selected' : '' }}>Femenino

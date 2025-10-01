@@ -26,21 +26,21 @@ class UserManager extends Component
     public $email = '';
     public $document_type = '';
     public $document_number = '';
-    public $status = '';
+    public $status = 1;
     public $password = '';
     public $roles = [];
 
     protected $pagination_theme = 'tailwind';
 
     protected $rules = [
-        'name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
+        'name' => 'required|string|max:50',
+        'last_name' => 'required|string|max:100',
         'phone' => 'nullable|string|max:20',
         'gender' => 'required|in:male,female',
-        'address' => 'nullable|string|max:500',
-        'email' => 'required|email|max:255',
+        'address' => 'nullable|string|max:200',
+        'email' => 'required|email|max:50',
         'document_type' => 'required|in:CI,NIT,PASSPORT',
-        'document_number' => 'required|string|max:20',
+        'document_number' => 'required|string|max:15',
         'status' => 'required|boolean',
     ];
 
@@ -98,7 +98,7 @@ class UserManager extends Component
         $this->document_number = $user->document_number;
         $this->address = $user->address ?? '';
         $this->email = $user->email;
-        $this->status = $user->status;
+        $this->status = $user->status ? 1 : 0;
         $this->roles = $user->roles ? $user->roles->pluck('id')->toArray() : [];
         $this->password = '';
 
@@ -136,7 +136,7 @@ class UserManager extends Component
                     'address' => $this->address,
                     'document_type' => $this->document_type,
                     'document_number' => $this->document_number,
-                    'status' => $this->status,
+                    'status' => (bool) $this->status,
                     'updated_at' => now(),
                 ];
 
@@ -162,7 +162,7 @@ class UserManager extends Component
                     'email' => $this->email,
                     'document_type' => $this->document_type,
                     'document_number' => $this->document_number,
-                    'status' => true,
+                    'status' => (bool) $this->status,
                     'password' => Hash::make($this->password),
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -203,6 +203,7 @@ class UserManager extends Component
         $this->resetForm();
         $this->editing = null;
         $this->show = true;
+        $this->status = 1;
     }
 
     public function closeModal(): void

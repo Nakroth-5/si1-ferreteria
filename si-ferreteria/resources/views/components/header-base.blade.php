@@ -15,8 +15,8 @@
                 <x-icons.roles class="mr-2"></x-icons.roles>
                 {{ $title }}
             </x-input-label>
-        </div>
-    </x-container-second-div>
+        </div
+>    </x-container-second-div>
 
     <!-- Búsqueda -->
     <x-container-second-div>

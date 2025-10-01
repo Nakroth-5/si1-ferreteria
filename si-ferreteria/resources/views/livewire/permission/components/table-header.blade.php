@@ -1,40 +1,33 @@
 <div>
     <x-table-header>
         <x-input-label>
-            {{ __('Nombre Rol') }}
+            <x-icons.permission/>
+            {{ __('Nombre Permiso') }}
         </x-input-label>
     </x-table-header>
 
     <x-table-header>
         <x-input-label>
             <x-icons.description/>
-            {{ __('Descripción Rol') }}
+            {{ __('Descripción') }}
         </x-input-label>
     </x-table-header>
 
     <x-table-header>
         <x-input-label>
-            <x-icons.level/>
-            {{ __('Nivel') }}
-        </x-input-label>
-    </x-table-header>
-
-    <x-table-header>
-        <x-input-label>Estado</x-input-label>
-    </x-table-header>
-
-    <x-table-header>
-        <x-input-label>
-            <x-icons.permission/>
-            {{ __('Permisos') }}
+            {{ __('Modulo') }}
         </x-input-label>
     </x-table-header>
 
     <x-table-header>
         <x-input-label>
-            <x-icons.settings/>
+            {{ __('Estado') }}
+        </x-input-label>
+    </x-table-header>
+
+    <x-table-header>
+        <x-input-label>
             {{ __('Acción') }}
         </x-input-label>
     </x-table-header>
 </div>
-
